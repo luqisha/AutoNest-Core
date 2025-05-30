@@ -10,7 +10,8 @@ class Car(models.Model):
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='car_images/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='media/car_images/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.brand} {self.name} ({self.model_year})"
