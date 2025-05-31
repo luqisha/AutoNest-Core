@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -15,3 +16,17 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.name} ({self.model_year})"
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    car = models.ForeignKey(
+        'Car', on_delete=models.CASCADE, related_name='favorites')
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'car')  # Prevent duplicate favorites
+
+    def __str__(self):
+        return f"{self.user} favorited {self.car}"

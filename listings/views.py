@@ -1,7 +1,8 @@
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Car
-from .serializers import CarSerializer
+from .models import Favorite
+from .serializers import CarSerializer, FavoriteSerializer
 from django.core.cache import cache
 from rest_framework.response import Response
 import redis
@@ -38,3 +39,14 @@ class CarViewSet(viewsets.ModelViewSet):
         cache.set(cache_key, serializer.data, timeout=300)
 
         return Response(serializer.data)
+
+
+class FavoriteViewSet(viewsets.ModelViewSet):
+    serializer_class = FavoriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Favorite.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

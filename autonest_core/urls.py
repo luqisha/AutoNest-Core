@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -25,6 +26,7 @@ from rest_framework_simplejwt.views import (
 from listings.auth_views import GoogleLogin
 
 urlpatterns = [
+    path('', lambda request: HttpResponse("Welcome to AutoNest API")),
     path('admin/', admin.site.urls),
     path('api/', include('listings.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
