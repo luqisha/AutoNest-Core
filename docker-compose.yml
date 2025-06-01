@@ -40,18 +40,20 @@ services:
       - media_volume:/app/media
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
-      - SECRET_KEY=django-insecure-z-1k*u-c^g7_@wm12p1kzi)e49l=t+70niwkl_c2d#!lbn%ujz
-      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
       - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
-      - DB_NAME=autonest_db
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=db
-      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
       - REDIS_URL=redis://redis:6379/1
-      - SOCIAL_AUTH_GOOGLE_CLIENT_ID=994976901936-675iqc8cm4pnc1ihgishq4daclg9kbpi.apps.googleusercontent.com
-      - SOCIAL_AUTH_GOOGLE_SECRET=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
+      - SOCIAL_AUTH_GOOGLE_CLIENT_ID=${SOCIAL_AUTH_GOOGLE_CLIENT_ID}
+      - SOCIAL_AUTH_GOOGLE_SECRET=${SOCIAL_AUTH_GOOGLE_SECRET}
     depends_on:
       db:
         condition: service_healthy
