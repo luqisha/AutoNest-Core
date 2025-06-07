@@ -175,3 +175,7 @@ cython_debug/
 
 # Media files
 media/
+
+# Private key files
+*.pem
+.ssh/
